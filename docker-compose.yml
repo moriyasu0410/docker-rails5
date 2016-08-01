@@ -1,38 +1,37 @@
-rails:
-  container_name: rails
-  build: .
-  command: bundle exec unicorn -p 3000 -c config/unicorn.conf.rb
-  ports:
-    - '3000:3000'
-  environment:
-    RAILS_ENV: development
-    MYSQL_ROOT_PASSWORD: 'root'
-    DATABASE_URL: 'mysql2://root:root@mysql:3306'
-  volumes_from:
-    - datastore
-  links:
-    - mysql
-
-nginx:
-  container_name: nginx
-  build: containers/nginx
-  ports:
-    - '80:80'
-  volumes_from:
-    - datastore
-  links:
-    - rails
-
-mysql:
-  container_name: mysql
-  image: mysql:5.6.30
-  environment:
-    MYSQL_ROOT_PASSWORD: 'root'
-  ports:
-    - '3306:3306'
-  volumes_from:
-    - datastore
-
-datastore:
-  container_name: datastore
-  build: containers/datastore
+version: '2'
+services:
+  rails:
+    container_name: rails
+    build: .
+    command: bundle exec unicorn -p 3000 -c config/unicorn.conf.rb
+    ports:
+      - '3000:3000'
+    environment:
+      RAILS_ENV: development
+      MYSQL_ROOT_PASSWORD: 'root'
+      DATABASE_URL: 'mysql2://root:root@mysql:3306'
+    volumes_from:
+      - datastore
+    links:
+      - mysql
+  nginx:
+    container_name: nginx
+    build: containers/nginx
+    ports:
+      - '80:80'
+    volumes_from:
+      - datastore
+    links:
+      - rails
+  mysql:
+    container_name: mysql
+    image: mysql:5.6.30
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    volumes_from:
+      - datastore
+  datastore:
+    container_name: datastore
+    build: containers/datastore
