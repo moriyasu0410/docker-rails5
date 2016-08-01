@@ -1,0 +1,29 @@
+# MySQL version 5.6
+#   gem install mysql2
+#
+#   Ensure the MySQL 5.6 gem is defined in your Gemfile
+#   gem 'mysql2'
+#
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  url: <%= ENV['DATABASE_URL'] %>
+  socket: /var/lib/mysql/mysql.sock
+  timeout: 5000
+
+development:
+  <<: *default
+  database: db_development
+
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: db_test
+
+production:
+  <<: *default
+  database: db_production
