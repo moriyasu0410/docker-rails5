@@ -22,4 +22,4 @@ $ docker-compose run rails rake db:create
 $ docker-compose up -d
 ```
 
-* http://0.0.0.0
+* http://127.0.0.1
