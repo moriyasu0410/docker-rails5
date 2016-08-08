@@ -12,8 +12,8 @@ services:
       DATABASE_URL: 'mysql2://root:root@mysql:3306'
     depends_on:
       - mysql
-    volumes_from:
-      - datastore
+    volumes:
+      - ./:/myapp
     links:
       - mysql
   nginx:
@@ -23,8 +23,8 @@ services:
       - '80:80'
     depends_on:
       - rails
-    volumes_from:
-      - datastore
+    volumes:
+      - ./containers_data/nginx:/var/log/nginx
     links:
       - rails
   mysql:
@@ -34,10 +34,5 @@ services:
       MYSQL_ROOT_PASSWORD: 'root'
     ports:
       - '3306:3306'
-    volumes_from:
-      - datastore
-  datastore:
-    container_name: datastore
-    build: containers/datastore
-volumes:
-  datastore:
+    volumes:
+      - ./containers_data/mysql:/var/lib/mysql
