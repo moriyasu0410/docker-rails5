@@ -14,7 +14,7 @@ $ docker-compose build
 
 * Database creation
 ```
-$ docker-compose run rails rake db:create
+$ docker-compose run rails rails db:create
 ```
 
 * Up
